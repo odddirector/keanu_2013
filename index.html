@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+   <script class="jsbin" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>-->
+  <script class="jsbin" src="jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+  <meta charset=utf-8 />
+  <title>Speed. A Creative Block Breaking App</title>
+  <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!--<style>
+    article, aside, figure, footer, header, hgroup, 
+    menu, nav, section { display: block; }
+  </style>-->
+
+  <link rel="stylesheet" type="text/css" href="reset.css" />
+  <link rel="stylesheet" type="text/css" href="appstyle.css" />
+</head>
+
+<body id="bo">
+  <!-- <div id="speed"></div> -->
+  <div id="logo">
+    <h1 class="speed">SPEED</h1>
+    <div class="line"></div>
+    <h2 class="sub">Keep typing &mdash; <br> Save Keanu from blowing up &mdash; <br> break a creative block</h2>
+  </div>
+  
+  <a class="bsa" href="http://igg.me/at/brainstore/">
+<!--   <div id="hs">
+    <div>Inspired <br> by the Brain Store</div>
+  </div> -->
+  </a>
+
+  <div id="iphone">
+    <div id="iphone-screen">
+      <div id="intro">
+        <div id="intro-color" class="fadeout"></div>
+      </div>
+
+
+      <div id="stage-one">
+        <!-- <div id="question">What is a book that is made of strings?</div> -->
+
+        <div id="what-making-question" class="init-question">
+          <div class="init-question-number">
+            <p>1</p>
+          </div>
+            What are you making?
+        </div>
+        <div id="what-making-arrow" class="init-question-arrow"></div>
+        <form>
+            <input id="making-what-input" class="init-submit" type="text" placeholder="One word" onkeypress="insertWhat();"/>
+            <input id="submit-what" class="init-submit-button" type="button" value="NEXT" onclick="insertWhatButton();" />
+        </form>
+        <!-- <div id="display-what"></div> -->
+      </div>
+
+
+      <div id="stage-two">
+        <div id="what-theme-question" class="init-question">
+          <div class="init-question-number">
+            <p>2</p>
+          </div>
+        </div>
+        <div id="theme-arrow" class="init-question-arrow"></div>
+        <form>
+            <input id="what-theme-input" class="init-submit" type="text" placeholder="One word" onkeypress="insertTheme();"/>
+            <input id="submit-theme" class="init-submit-button" type="button" value="NEXT" onclick="insertThemeButton();" />
+        </form>
+        <!-- <div id="display-theme"></div> -->
+      </div>
+
+
+      <div id="stage-three">
+        <div id="break-what-question" class="init-question">
+          <div class="init-question-number">
+            <p>3</p>
+          </div>
+        </div>
+        <div id="break-what-arrow" class="init-question-arrow"></div>
+        <form>
+            <input id="break-what-input" class="init-submit" type="text" placeholder="Many" onkeypress="insertBreakWhat();"/>
+            <input id="submit-break-what" class="init-submit-button" type="button" value="NEXT" onclick="insertBreakWhatButton(); goToFour();" />
+        </form>
+        <div id="break-answers-area">
+          <div id="display-break-what"></div>
+        </div>
+      </div>
+
+
+      <div id="stage-four">
+        <div id="break-theme-question" class="init-question">
+          <div class="init-question-number">
+            <p>4</p>
+          </div>
+        </div>
+        <div id="break-what-arrow" class="init-question-arrow"></div>
+        <form>
+            <input id="break-theme-input" class="init-submit" type="text" placeholder="Many" onkeypress="insertBreakTheme();"/>
+            <input id="submit-break-theme" class="init-submit-button" type="button" value="NEXT" onclick="insertBreakThemeButton(); goToFive();" />
+        </form>
+        <div id="break-answers-area">
+          <div id="display-break-theme"></div>
+        </div>
+      </div>
+
+
+      <div id="stage-five">
+        <div id="question" class="question-popin"></div>
+        <div id="guide">
+          
+          <input id="start-button" class="red-button" type="button" value="START!" onclick="startGame();" />
+          
+          <div id="hint3" class="guide-hint">
+            <p>Keep typing &mdash;
+            keep the bus above 50 mph</p>
+            <!-- <div class="hint-number"><p>3</p></div> -->
+            <div id="triangle3"></div>
+          </div>
+          <div id="hint1" class="guide-hint">
+            <p>The question will pop up here.
+                Answer it</p>
+            <!-- <div class="hint-number"><p>1</p></div> -->
+          </div>
+          <div id="hint2" class="guide-hint">
+              <p>Type anything that comes to your mind here</p>
+            <!-- <div class="hint-number"><p>2</p></div> -->
+            <div id="triangle2"></div>
+          </div>
+        </div>
+        <div id="road"></div>
+        <div id="dashboard">
+          <div id="spedo-placeholder">
+            <canvas id="spedo" width="102" height="70"></canvas>
+          </div>
+        </div>
+        <div id="answers-area">
+          <div id="display"></div>
+        </div>
+        <div id="text-input">
+          <form>
+            <input id="tickets" type="text" placeholder="" onkeypress="insert()"/>
+          </form>
+        </div>
+        <div id="bus">
+          <div id="keanu"></div>
+        </div>
+        <div id="toboom"></div>
+        <div id="start-again" class="slideup">
+          <input type="button" class="red-button" value="START AGAIN!" onclick="startAgain();" />
+          <div id="suggest-copy" class="init-question">Or copy your ideas from here</div>
+          <div id="suggest-arrow" class="init-question-arrow"></div>
+          <div id="copy-answers"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="rules">
+    <div id="stroke-wrapper">
+      <h3 class="rules-text">RULES</h3>
+      <p>Speed is a web app for fighting a creative blog. <br> It's inspired by the 1994 film with Keanu Reeves called Speed</p>
+      <ol>
+        <li>Answer the questions
+          <p>Describe what you are working on you're having a creative block with <br> Ex: A book about music, an app for cooking, a poster for a band etc.</p>
+        </li>
+        <li>Answer the generated ideas-triggering question
+          <p>The game will generate a unique personalised question. <br> 
+Answer it as quickly as possible without thinking. <br>
+You have to keep the speed up. <br> 
+If the speed of the bus drops below 50 mph -- Keanu blows up, you loose. </p>
+</li>
+      </ul>
+
+    </div>
+  </div>
+
+<div id="addthis">
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style ">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_pinterest_pinit"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":false};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-510415f6790df3b5"></script>
+<!-- AddThis Button END -->
+</div>
+
+  <div id="copy"><a href="http://futurecrazy.co.uk/">&copy; Futurecrazy 2013</a></div>
+  <div id="marginbtm"></div>
+
+
+  <script type="text/javascript">
+
+
+    var tickets = [];
+
+    var whatIsBeingMade = "";
+
+    var whatTheme = "";
+
+    var frequency = [];
+
+    var whatInput = document.getElementById("making-what-input");
+
+    var ticketInput = document.getElementById("tickets");
+
+    var messageBox  = document.getElementById("display");
+
+    var body  = document.getElementById("bo");
+
+    // var displayWhat  = document.getElementById("display-what");
+
+    //var speed  = document.getElementById("speed");
+
+    //var road = document.getElementById("road");
+
+    var arrowspeed = 0.008;
+    var gas = 0.016;
+    var maxspeed = 72.3;
+
+    var i = 70;
+    var s = arrowspeed;
+    var ind = -1;
+
+    var roadspeed = 0.3;
+
+    var canvas = document.getElementById('spedo');
+    var context = canvas.getContext('2d');
+
+    var toboom = document.getElementById('toboom');
+
+    var stageone = document.getElementById('stage-one');
+
+    var stagetwo = document.getElementById('stage-two');
+
+    var stagethree = document.getElementById('stage-three');
+
+    var stagefour = document.getElementById('stage-four');
+
+    var stagefive = document.getElementById('stage-five');
+
+    var intro = document.getElementById('intro');
+
+    var boomonce = true;
+
+    var imageObj = new Image();
+
+    var compiledQuestion;
+
+    imageObj.src = 'images/spedo2.png';
+        
+    function launchIntro() {
+      setTimeout(function introSlideOut() {
+        intro.className = "slideout";
+        //stageone.style.display = "inline";
+        //stageone.className = "slidein";
+        goToFive();
+      }, 1500)
+      setTimeout(function () { // otherwise css animation is jerky
+        //whatInput.focus();
+      }, 1700)
+    }
+
+    launchIntro();
+
+
+
+    function showHint1() {
+      setTimeout(function () {
+        var hint1 = document.getElementById("hint1");
+        hint1.style.display = "inline";
+      }, 800)
+    }
+
+    function showHint2() {
+      setTimeout(function () {
+        var hint2 = document.getElementById("hint2");
+        hint2.style.display = "inline";
+      }, 800)
+    }
+
+    function showHint3() {
+      setTimeout(function () {
+        var hint3 = document.getElementById("hint3");
+        hint3.style.display = "inline";
+      }, 1600)
+    }
+
+    function showStart() {
+      setTimeout(function () {
+        var start = document.getElementById("start-button");
+        start.style.display = "inline";
+      }, 2400)
+    }
+
+
+    function goToTwo() {
+      if(whatIsBeingMade != "") {
+        intro.style.display = "none";
+        stagetwo.style.display = "inline";
+        stagetwo.className = "slidein";
+        stageone.className = "slideout";
+        //body.className = "blue-red";
+        document.getElementById("what-theme-question").innerHTML += "What is the "+whatIsBeingMade+" about?";
+        setTimeout(function () {
+          themeInput.focus();
+        }, 200)
+      }
+    }
+
+
+
+    function goToThree() {
+      if(whatTheme != "") {
+        stageone.style.display = "none";
+        stagethree.style.display = "inline";
+        stagethree.className = "slidein";
+        stagetwo.className = "slideout";
+        //body.className = "red-green";
+        breakWhatQuestion.innerHTML += "What is "+whatIsBeingMade+" made of?";
+        setTimeout(function () {
+          whatBreakInput.focus();
+        }, 250)
+      }
+    }
+
+    function goToFour() {
+      if(breakWhat[0] != null) {
+        stagetwo.style.display = "none";
+        stagefour.style.display = "inline";
+        stagefour.className = "slidein";
+        stagethree.className = "slideout";
+        breakThemeQuestion.innerHTML += "What is "+whatTheme+" made of?";
+        setTimeout(function () {
+          themeBreakInput.focus();
+        }, 250)
+      }
+    }
+
+    function goToFive(t) {
+      //if(breakTheme[0] != null || t=="testing") {
+        stagethree.style.display = "none";
+        stagefive.style.display = "inline";
+        stagefive.className = "slidein";
+        stagefour.className = "slideout";
+        // showHint1();
+        showHint2();
+        showHint3();
+        showStart();
+
+        
+        //startGame();
+      //}
+    }
+
+
+    function map_range(value, low1, high1, low2, high2) { 
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    }
+    // incoming value, its current lower bound, its current higher bound,  new lower bound, new higher bound
+
+
+
+    function insertWhat ( ) {
+      if (event.keyCode == 13 && whatInput.value != "") {
+        whatIsBeingMade = whatInput.value;
+        //displayWhat.innerHTML = whatIsBeingMade;
+        //whatInput.value = "";
+        console.log("whatIsBeingMade = "+whatIsBeingMade);
+        goToTwo();
+      }
+    }
+
+    function insertWhatButton ( ) {
+      if (whatInput.value != "" ) {
+        whatIsBeingMade = whatInput.value;
+        // displayWhat.innerHTML = whatIsBeingMade;
+        whatInput.value = "";
+        console.log("whatIsBeingMade = "+whatIsBeingMade);
+        goToTwo();
+      }
+    }
+
+
+
+
+    var themeInput = document.getElementById("what-theme-input");
+    // var displayTheme  = document.getElementById("display-theme");
+
+
+    function insertTheme ( ) {
+      if (event.keyCode == 13 && themeInput.value != "") {
+        whatTheme = themeInput.value;
+        //displayTheme.innerHTML = whatTheme;
+        //themeInput.value = "";
+        goToThree();
+      }
+    }
+
+    function insertThemeButton ( ) {
+      if(themeInput.value != "") {
+        whatTheme = themeInput.value;
+        //displayTheme.innerHTML = whatTheme;
+        //themeInput.value = "";
+        goToThree();
+      }
+    }
+
+
+
+
+    var whatBreakInput = document.getElementById("break-what-input");
+    var displayBreakWhat  = document.getElementById("display-break-what");
+    var breakWhatQuestion  = document.getElementById("break-what-question");
+    var breakWhat = [];
+    var countWhat = -1;
+
+
+    function insertBreakWhat ( ) {
+      if (event.keyCode == 13 && whatBreakInput.value != "") {
+        breakWhat.push( whatBreakInput.value );
+        countWhat +=1;
+        clearAndShowBrokenWhat();
+      }
+    }
+
+    function insertBreakWhatButton ( ) {
+      if(whatBreakInput.value != "") {
+        clearAndShowBrokenWhat();
+      }
+    }
+
+
+
+    var themeBreakInput = document.getElementById("break-theme-input");
+    var displayBreakTheme  = document.getElementById("display-break-theme");
+    var breakThemeQuestion  = document.getElementById("break-theme-question");
+    var breakTheme = [];
+    var countTheme = -1;
+
+
+    function insertBreakTheme ( ) {
+      if (event.keyCode == 13 && themeBreakInput.value != "") {
+        breakTheme.push( themeBreakInput.value );
+        countTheme +=1;
+        console.log(breakTheme[countTheme]);
+        clearAndShowBrokenTheme();
+      }
+    }
+
+    function insertBreakThemeButton ( ) {
+      if(themeBreakInput.value != "") {
+        clearAndShowBrokenTheme();
+      }
+    }
+
+
+
+    function insert ( ) {
+     if (event.keyCode == 13 && ticketInput.value != "") {
+       tickets.push( ticketInput.value );
+       ind += 1;
+       clearAndShow();
+       if(i <= maxspeed) {
+        s -= gas;
+      }
+    }
+    }
+
+    $(function() {
+        $("form").submit(function() { return false; });
+    });
+
+    function clearAndShow () {
+      // Clear our fields
+      ticketInput.value = "";
+
+      var entrp = document.createElement("div"); // element is created to write innerhtml into it 
+      entrp.id = ("dv"+ind);
+      entrp.className = "ani2";
+
+      messageBox.appendChild(entrp);
+
+      var textto = document.getElementById('dv'+ind);
+      textto.innerHTML = ("<p id='sp"+ind+"'><span id='sp"+ind+"' class='ani'>" + tickets[ind] + "</span></p>"); // keeps css animation running separately i each element
+
+    }
+
+
+    function clearAndShowBrokenWhat () {
+      // Clear our fields
+      whatBreakInput.value = "";
+
+      var entrp = document.createElement("div"); // element is created to write innerhtml into it 
+      entrp.id = ("whatdv"+countWhat);
+      entrp.className = "ani2";
+
+      displayBreakWhat.appendChild(entrp);
+
+      var textto = document.getElementById('whatdv'+countWhat);
+      textto.innerHTML = ("<p id='sp"+countWhat+"'><span id='sp"+countWhat+"' class='ani'>" + breakWhat[countWhat] + "</span></p>"); // keeps css animation running separately i each element
+
+    }
+
+
+
+
+    function clearAndShowBrokenTheme () {
+      // Clear our fields
+      themeBreakInput.value = "";
+
+      var entrp = document.createElement("div"); // element is created to write innerhtml into it 
+      entrp.id = ("themedv"+countTheme);
+      entrp.className = "ani2";
+
+      displayBreakTheme.appendChild(entrp);
+
+      var textto = document.getElementById('themedv'+countTheme);
+      textto.innerHTML = ("<p id='sp"+countTheme+"'><span id='sp"+countTheme+"' class='ani'>" + breakTheme[countTheme] + "</span></p>"); // keeps css animation running separately i each element
+
+    }
+
+
+    var startAgainScreen = document.getElementById("start-again");
+    var copyanswers  = document.getElementById("copy-answers");
+
+    function gameEnds() {
+      setTimeout(function() {
+        startAgainScreen.style.display = "inline";
+        for(var i=0; i<tickets.length; i++) {
+          copyanswers.innerHTML += "<p>"+tickets[i]+"</p>";
+        }
+        //copyanswers.select();
+      }, 300)
+
+    }
+
+
+    function startAgain() {
+      startAgainScreen.className = "slidedown";
+      setTimeout(function () {
+        startAgainScreen.style.display = "none";
+        startAgainScreen.className = "slideup";
+      }, 500) // after css .slidedown animation 0.5s is finished
+      i = maxspeed;
+      s = arrowspeed;
+      boomonce = true;
+      endGame = false;
+      toboom.innerHTML = "";
+      setTimeout(function () {
+        ticketInput.focus();
+        //ticketInput.placeholder = shortQuestion;
+      }, 250)
+    }
+
+
+  var endGame = false;
+
+  var shortQuestion;
+
+
+  function generateQuestion() {
+
+    var connectors1 = ["made of", "made by", "looking like", "mixed with", "created with", "covered with"];
+    var connectors2 = ["instead of", "for", "inside its"];
+    var allConnectors = connectors1 + connectors2;
+
+    var c1 = connectors1[Math.floor(Math.random()*(connectors1.length))];
+    var c2 = connectors2[Math.floor(Math.random()*(connectors2.length))];
+    var allc = allConnectors[Math.floor(Math.random()*(allConnectors.length))];
+
+    var subjectElement = breakWhat[Math.floor(Math.random()*(breakWhat.length))];
+    var themeElement = breakTheme[Math.floor(Math.random()*(breakTheme.length))];
+
+    var q1 = "What is a "+whatIsBeingMade+" that has "+subjectElement+" "+c1+" "+themeElement+"?";
+
+    compiledQuestion = q1;
+    //shortQuestion = whatIsBeingMade+" = "+subjectElement+" "+c1+" "+themeElement;
+    shortQuestion = subjectElement+" "+c1+" "+themeElement;
+  }
+
+
+
+  function questionPopup() {
+    var timeOnScreen = 2500; // milisec
+    var howOftenPops = 15000; // milisec
+    var question = document.getElementById("question");
+    //question.innerHTML = "What if your "+whatIsBeingMade+" has "++;
+     question.innerHTML = compiledQuestion;
+    setTimeout(function () {
+     question.style.display = "inline";
+    }, 300)
+     
+     window.setInterval(function(){
+        if(!endGame) {
+          question.className = "question-popin";
+          question.style.display = "inline";
+
+          setTimeout(function () {
+            question.className = "question-popout";
+          }, timeOnScreen)
+          setTimeout(function () {
+            question.style.display = "none";
+          }, timeOnScreen+200)
+        }
+    }, howOftenPops);
+  }
+
+
+  function startGame () {
+
+
+      var guide = document.getElementById("guide");
+      guide.className = "slidedown";
+
+
+      setTimeout(function () {
+        guide.style.display = "none";
+      }, 250)
+
+
+      //generateQuestion();
+      //questionPopup();
+      moveRoad();
+
+
+      setTimeout(function () {
+        ticketInput.focus();
+        //ticketInput.placeholder = shortQuestion;
+      }, 250)
+
+
+
+
+
+
+
+
+
+        window.setInterval(function(){
+
+
+          roadspeed = map_range(i, 63, 73, 8, 200); // remaps i for usage in background speed / as initiar range is not suitble
+          //and you won't see the difference in speed
+
+          if(i >= 63 && i <= maxspeed) {
+           i -= s;
+           //roadspeed += 0.001;
+          } else if (i > maxspeed) {
+            i -= 0.1;
+            s += 0.008;
+          }
+
+
+          // bus explodes
+          if(i < 63 && boomonce) {
+            toboom.innerHTML = "<div id='boom' class='boomaniclass'></div>";
+            boomonce = false;
+            gameEnds();
+            endGame = true;
+            //throw "endthis";
+          }
+
+
+
+          context.drawImage(imageObj, 2, 10);
+
+          context.beginPath();
+          context.moveTo(50, 50);
+          context.lineTo(50+Math.round(35*Math.cos(30*(i/2)*Math.PI/180)), 50+Math.round(35*Math.sin(30*(i/2)*Math.PI/180)));
+          context.lineWidth = 2;
+          context.strokeStyle = 'red';
+          context.stroke();
+          
+          //speed.innerHTML = "i: " + i + "<br> s: " + s;
+          //speed.innerHTML = i;
+        
+          // if(endGame) {
+          //   clearInterval(moveArrow);
+          // }
+          
+
+          // }
+        }, 40 );
+
+
+
+
+
+
+          window.setInterval(function(){
+            if (s <= arrowspeed) {
+              s += 0.01;
+            //speed.innerHTML = "Speed: " + (s);
+            }
+
+          // if(endGame) {
+          //   clearInterval(speedDrops);
+          // }
+
+          }, 3000 );
+
+
+      //console.log("return");
+      //return;
+
+    }; // startGame()
+
+
+    function moveRoad() {
+      $('#road').queue(function(next) {
+      $(this).animate({
+          'background-position-y': '+='+roadspeed
+        }, {easing: "linear"});
+      $(this).queue(arguments.callee);
+      next();
+      });
+
+          // if(endGame) {
+          //   return;
+          // }
+
+    }
+
+    //launchIntro();
+
+    //goToFive("testing");
+    //startGame();
+
+    //moveRoad();
+
+
+
+
+  </script>
+	
+
+</body>
+</html>
